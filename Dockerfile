@@ -35,9 +35,10 @@ RUN npm -v
 
 #TexLive
 #Вот прям все и устанавливаем
+ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Moscow
 RUN    apt-get update \
-    && apt-get install -y  --no-install-recommends \
+    && apt-get install -y \
            texlive-full
            
 # запуск сайта
