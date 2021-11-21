@@ -37,7 +37,7 @@ RUN npm -v
 #Вот прям все и устанавливаем
 
 RUN    apt-get update \
-    && apt-get install -y  \
+    && apt-get install -y  --no-install-recommends \
            texlive-full
            
 # запуск сайта
