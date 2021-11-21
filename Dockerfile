@@ -47,7 +47,8 @@ RUN    apt-get update \
            make \
            perl \
            fonts-liberation \
-           fonts-dejavu
+           fonts-dejavu \
+           texlive-pstricks
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D6BC243565B2087BC3F897C9277A7293F59E4889
 RUN echo "deb http://miktex.org/download/ubuntu focal universe" | tee /etc/apt/sources.list.d/miktex.list
