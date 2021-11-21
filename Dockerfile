@@ -35,7 +35,7 @@ RUN npm -v
 
 #TexLive
 #Вот прям все и устанавливаем
-
+ENV TZ=Europe/Moscow
 RUN    apt-get update \
     && apt-get install -y  --no-install-recommends \
            texlive-full
