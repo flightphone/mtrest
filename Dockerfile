@@ -26,11 +26,14 @@ FROM ubuntu:focal
 # add node and npm to path so the commands are available
 #ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 #ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Moscow
+
 
 RUN apt-get update \
     && apt-get install -y nodejs \
     npm
-    
+
 # confirm installation
 RUN node -v
 RUN npm -v
@@ -38,7 +41,7 @@ RUN npm -v
 
 
 #MikTex
-ARG DEBIAN_FRONTEND=noninteractive
+
 
 RUN    apt-get update \
     && apt-get install -y --no-install-recommends \
