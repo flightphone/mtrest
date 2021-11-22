@@ -1,10 +1,10 @@
-FROM texlive/texlive:latest
+FROM ubuntu:latest
 
 #RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # update the repository sources list
 # and install dependencies
-# RUN apt-get update \
+#RUN apt-get update \
 #    && apt-get install -y curl \
 #    && apt-get -y autoclean
 
@@ -26,26 +26,25 @@ FROM texlive/texlive:latest
 # add node and npm to path so the commands are available
 #ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 #ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-RUN apt-get update \
-    && apt-get install -y nodejs \
-    npm \
-    apt-transport-https \
-           ca-certificates \
-           dirmngr \
-           ghostscript \
-           gnupg \
-           gosu \
-           make \
-           perl \
-           fonts-liberation \
-           fonts-dejavu
 
-
- 
 # confirm installation
 #RUN node -v
 #RUN npm -v
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Europe/Moscow
 
+RUN apt-get update \
+    && apt-get install -y nodejs \
+    npm
+
+
+#TexLive
+#Вот прям все и устанавливаем
+
+RUN    apt-get update \
+    && apt-get install -y \
+           texlive-full
+           
 # запуск сайта
 # создание директории приложения
 WORKDIR /usr/src/app

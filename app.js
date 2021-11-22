@@ -46,7 +46,7 @@ app.post('/upload/:main', upload.single('file'), function (req, res) {
         await extract(zipname, { dir: __dirname + '/dnload/' + uniq })
         //xelatex -interaction nonstopmode ./dnload/2021_11_20T14_36_28_971Z/Map.tex
         //компилируем
-        let exe = 'xelatex -interaction nonstopmode -enable-write18 ' + texfile;
+        let exe = 'xelatex -interaction nonstopmode --shell-escape ' + texfile;
         exec(exe, { cwd: target }, (error, stdout, stderr) => {
         
         try
