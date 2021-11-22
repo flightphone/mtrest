@@ -39,7 +39,7 @@ ENV TZ=Europe/Moscow
 
 
 #TexLive
-#Вот прям все и устанавливаем
+#Вот прям все и устанавливаем 2019
 
 RUN    apt-get update \
     && apt-get install -y \
