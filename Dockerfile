@@ -14,8 +14,8 @@ ENV NODE_VERSION 12.16.3
 
 # install nvm
 # https://github.com/creationix/nvm#install-script
-RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
-#RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+#RUN curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+RUN curl --silent -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 
 # install node and npm
 RUN source $NVM_DIR/nvm.sh \
@@ -34,9 +34,7 @@ ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 RUN node -v
 RUN npm -v
 
-RUN apt-get update \
-    && apt-get install -y texlive-pstricks 
-#    && apt-get -y autoclean
+
 
 # запуск сайта
 # создание директории приложения
