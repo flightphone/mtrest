@@ -1,12 +1,12 @@
-FROM ubuntu:21.04
+FROM texlive/texlive:latest
 
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # update the repository sources list
 # and install dependencies
-RUN apt-get update \
-    && apt-get install -y curl \
-    && apt-get -y autoclean
+# RUN apt-get update \
+#    && apt-get install -y curl \
+#    && apt-get -y autoclean
 
 # nvm environment variables
 ENV NVM_DIR /usr/local/nvm
@@ -27,24 +27,17 @@ RUN source $NVM_DIR/nvm.sh \
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
 
+
+
+ 
 # confirm installation
 RUN node -v
 RUN npm -v
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Europe/Moscow
 
-#RUN apt-get update \
-#    && apt-get install -y nodejs \
-#    npm
+RUN apt-get update \
+    && apt-get install -y texlive-pstricks 
+#    && apt-get -y autoclean
 
-
-#TexLive
-#Вот прям все и устанавливаем
-
-RUN    apt-get update \
-    && apt-get install -y \
-           texlive-full
-           
 # запуск сайта
 # создание директории приложения
 WORKDIR /usr/src/app
