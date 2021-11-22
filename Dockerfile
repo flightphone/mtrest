@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM texlive/texlive:latest
 
 #RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
@@ -26,26 +26,10 @@ FROM ubuntu:focal
 # add node and npm to path so the commands are available
 #ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
 #ENV PATH $NVM_DIR/versions/node/v$NODE_VERSION/bin:$PATH
-ARG DEBIAN_FRONTEND=noninteractive
-ENV TZ=Europe/Moscow
-
-
 RUN apt-get update \
     && apt-get install -y nodejs \
-    npm
-
-# confirm installation
-RUN node -v
-RUN npm -v
-
-
-
-#MikTex
-
-
-RUN    apt-get update \
-    && apt-get install -y --no-install-recommends \
-           apt-transport-https \
+    npm \
+    apt-transport-https \
            ca-certificates \
            dirmngr \
            ghostscript \
@@ -54,23 +38,13 @@ RUN    apt-get update \
            make \
            perl \
            fonts-liberation \
-           fonts-dejavu 
+           fonts-dejavu
 
-RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D6BC243565B2087BC3F897C9277A7293F59E4889
-RUN echo "deb http://miktex.org/download/ubuntu focal universe" | tee /etc/apt/sources.list.d/miktex.list
 
-RUN    apt-get update -y \
-    && apt-get install -y --no-install-recommends \
-           miktex
-
-RUN    miktexsetup finish \
-    && initexmf --admin --set-config-value=[MPM]AutoInstall=1 \
-    && mpm --admin --update-db \
-    && mpm --admin \
-           --install amsfonts \
-           --install biber-linux-x86_64 \
-    && initexmf --admin --update-fndb
-
+ 
+# confirm installation
+#RUN node -v
+#RUN npm -v
 
 # запуск сайта
 # создание директории приложения
@@ -89,11 +63,6 @@ RUN npm install
 COPY . .
 
 RUN mkdir /usr/src/app/dnload
-RUN mkdir /usr/.miktex
-ENV MIKTEX_USERCONFIG=/usr/.miktex/texmfs/config
-ENV MIKTEX_USERDATA=/usr/.miktex/texmfs/data
-ENV MIKTEX_USERINSTALL=/usr/.miktex/texmfs/install
-
 
 EXPOSE 2000
 CMD [ "node", "app.js" ]
