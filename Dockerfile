@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM ubuntu:21.04
 
 #RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
