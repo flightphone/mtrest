@@ -3,6 +3,14 @@ FROM texlive/texlive:latest
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Moscow
 
+#install fonts
+RUN    apt-get update \
+    && apt-get install -y --no-install-recommends \
+    fonts-liberation \
+    fonts-dejavu \
+    fonts-symbola \
+    fonts-roboto 
+
 #install node
 #RUN apt-get update \
 #    && apt-get install -y nodejs \
