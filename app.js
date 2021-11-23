@@ -17,12 +17,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get('/', function (req, res) {
-  res.send('MikTex rest api');
+  res.send('Free xelatex (TexLive2021) online compiler');
 });
 
 app.post('/upload/:main', upload.single('file'), function (req, res) {
   let main = req.params['main'];
-  if (main == null)
+  if (main=='-')
     main = req.file.originalname;
     
   main = main.replace(/\..../, '');
@@ -44,7 +44,6 @@ app.post('/upload/:main', upload.single('file'), function (req, res) {
       //разархивируем  
       try {
         await extract(zipname, { dir: __dirname + '/dnload/' + uniq })
-        //xelatex -interaction nonstopmode ./dnload/2021_11_20T14_36_28_971Z/Map.tex
         //компилируем
         let exe = 'xelatex -interaction nonstopmode -output-driver="xdvipdfmx -i dvipdfmx-unsafe.cfg -q -E" ' + texfile;
         exec(exe, { cwd: target }, (error, stdout, stderr) => {
