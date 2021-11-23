@@ -3,14 +3,6 @@ FROM texlive/texlive:latest
 ARG DEBIAN_FRONTEND=noninteractive
 ENV TZ=Europe/Moscow
 
-# now the microsoft core fonts
-RUN echo "Installing microsoft core fonts." &&\
-    echo "ttf-mscorefonts-installer msttcorefonts/accepted-mscorefonts-eula select true" | debconf-set-selections &&\
-    echo "ttf-mscorefonts-installer msttcorefonts/present-mscorefonts-eula note" | debconf-set-selections &&\
-    curl --output "/tmp/ttf-mscorefonts-installer.deb" "http://ftp.de.debian.org/debian/pool/contrib/m/msttcorefonts/ttf-mscorefonts-installer_3.7_all.deb" &&\
-    (apt install -f -y --no-install-recommends "/tmp/ttf-mscorefonts-installer.deb" || true) &&\
-    rm -f "/tmp/ttf-mscorefonts-installer.deb" 
-
 #install node
 #RUN apt-get update \
 #    && apt-get install -y nodejs \
