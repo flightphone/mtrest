@@ -1,5 +1,4 @@
 var express = require('express');
-var app = express();
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var upload = multer();
@@ -11,20 +10,20 @@ const extract = require('extract-zip')
 
 
 
-
+var app = express();
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.get('/', function (req, res) {
-  res.send('Free xelatex (TexLive2021) online compiler');
+  res.send('<h1>Free xelatex (TexLive2021) online compiler demo</h1>');
 });
 
 app.post('/upload/:main', upload.single('file'), function (req, res) {
   let main = req.params['main'];
-  if (main=='-')
+  if (main == '-')
     main = req.file.originalname;
-    
+
   main = main.replace(/\..../, '');
 
   let now = new Date();
@@ -47,27 +46,25 @@ app.post('/upload/:main', upload.single('file'), function (req, res) {
         //компилируем
         let exe = 'xelatex -interaction nonstopmode -output-driver="xdvipdfmx -i dvipdfmx-unsafe.cfg -q -E" ' + texfile;
         exec(exe, { cwd: target }, (error, stdout, stderr) => {
-        
-        try
-        {  
-          let bf = fs.readFileSync(target + '/' + main + '.pdf');
-          
-          //Удаляем файлы  
-          fs.unlink(zipname, (err) => {});
-          fs.rmdir(target, {
-            recursive: true,
-          }, () => {
-          });
 
-          res.setHeader('Content-Disposition', 'attachment; filename="' + main + '.pdf"');
-          res.write(bf, "binary");
-          res.end();
+          try {
+            let bf = fs.readFileSync(target + '/' + main + '.pdf');
 
-        }
-        catch (err2)
-        {
-          res.send(err2);
-        }
+            //Удаляем файлы  
+            fs.unlink(zipname, (err) => { });
+            fs.rmdir(target, {
+              recursive: true,
+            }, () => {
+            });
+
+            res.setHeader('Content-Disposition', 'attachment; filename="' + main + '.pdf"');
+            res.write(bf, "binary");
+            res.end();
+
+          }
+          catch (err2) {
+            res.send(err2);
+          }
 
 
         });
